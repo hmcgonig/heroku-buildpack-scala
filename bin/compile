@@ -31,9 +31,9 @@ export PATH=$(echo "$PATH" | sed -e s/$escAppBuildDir/$escBuildDir/g)
 
 export_env_dir $ENV_DIR
 
-JVM_COMMON_BUILDPACK=${JVM_COMMON_BUILDPACK:-"https://codon-buildpacks.s3.amazonaws.com/buildpacks/heroku/jvm-common.tgz"}
 mkdir -p /tmp/jvm-common
-curl --silent --location $JVM_COMMON_BUILDPACK | tar xzm -C /tmp/jvm-common --strip-components=1
+cp $BIN_DIR/bin /tmp/jvm-common/
+cp $BIN_DIR/opt /tmp/jvm-common/
 . /tmp/jvm-common/bin/util
 . /tmp/jvm-common/bin/java
 
