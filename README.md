@@ -47,6 +47,17 @@ the compile process would look like this:
 $ heroku config:set SBT_OPTS="-J-Xss4m"
 ```
 
+Running additional tasks before the build
+----------------
+
+Sometimes, it might be necessary to run additional sbt tasks before a build and deployment (for example, database migrations). Ideally, the tasks should be interdependent such that these tasks run automatically as pre-requisities to `compile stage`, but sometimes this might not be the case. To add any additional tasks, set the environment variable `SBT_PRE_TASKS` to a list of tasks that should be executed. If the following is set:
+
+    SBT_PRE_TASKS=flyway:migrate info
+    
+Then, the following command will be run for build:
+
+    sbt flyway:migrate info compile stage
+    
 Clean builds
 ------------
 
@@ -75,10 +86,10 @@ To make changes to this buildpack, fork it on Github. Push up changes to your fo
 heroku create --buildpack <your-github-url>
 
 # Configure an existing Heroku app to use your buildpack
-heroku config:set BUILDPACK_URL=<your-github-url>
+heroku buildpacks:set <your-github-url>
 
 # You can also use a git branch!
-heroku config:set BUILDPACK_URL=<your-github-url>#your-branch
+heroku buildpacks:set <your-github-url>#your-branch
 ```
 
 License
